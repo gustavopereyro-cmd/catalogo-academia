@@ -328,7 +328,7 @@
   </div>
 </main>
 
-<!-- ⚠️ CAMBIÁ EL NÚMERO DE WHATSAPP EN EL href Y EL MENSAJE -->
+<!-- ⚠️ CAMBIÁ EL NÚMERO DE WHATSAPP -->
 <section class="cta">
   <h3>¿Tenés dudas sobre algún curso?</h3>
   <p>Escribinos por WhatsApp y te asesoramos para que elijas el programa ideal para vos.</p>
@@ -440,14 +440,12 @@
       return true;
     });
 
-    // Mostrar / ocultar botón limpiar
     if (q || duracionSel) {
       btnLimpiarEl.hidden = false;
     } else {
       btnLimpiarEl.hidden = true;
     }
 
-    // Contador
     if (filtrados.length === TODOS_LOS_CURSOS.length) {
       contadorEl.textContent = `Mostrando los ${TODOS_LOS_CURSOS.length} cursos disponibles.`;
     } else {
@@ -506,3 +504,22 @@
       <div class="detalle">
         ${curso.Descripcion_Larga
           ? `<div class="desc-larga">${esc(curso.Descripcion_Larga)}</div>`
+          : '<p style="color:var(--ink-soft);font-style:italic;">Sin descripción ampliada.</p>'}
+      </div>
+    `;
+
+    const boton = card.querySelector('.btn-detalle');
+    const detalle = card.querySelector('.detalle');
+    boton.addEventListener('click', () => {
+      const abierto = detalle.classList.toggle('abierto');
+      boton.textContent = abierto ? 'Ocultar' : 'Ver más';
+    });
+
+    return card;
+  }
+
+  cargarCatalogo();
+</script>
+
+</body>
+</html>
