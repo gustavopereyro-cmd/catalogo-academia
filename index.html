@@ -321,7 +321,6 @@
       <div class="marca">Academia Profesional <strong>Mariana Barrera</strong></div>
     </div>
     <div class="header-right">
-      <!-- ⚠️ CAMBIÁ ESTA URL POR LA DEL REPO DE ALUMNOS -->
       <a class="btn-ingresar" href="https://gustavopereyro-cmd.github.io/academia-alumno/" target="_blank" rel="noopener">Ingresar al aula</a>
     </div>
   </div>
@@ -347,7 +346,6 @@
   </div>
 </main>
 
-<!-- ⚠️ CAMBIÁ EL NÚMERO DE WHATSAPP -->
 <section class="cta">
   <h3>¿Tenés dudas sobre algún curso?</h3>
   <p>Escribinos por WhatsApp y te asesoramos para que elijas el programa ideal para vos.</p>
@@ -361,11 +359,12 @@
   <strong>Academia Profesional Mariana Barrera</strong>
   Formación profesional · Atención personalizada
 </footer>
+
 <script>
-  // ⚠️ URL del Apps Script del ALUMNO
+  // URL del Apps Script del ALUMNO
   const API_URL = 'https://script.google.com/macros/s/AKfycbyNPTjRExPbY9QfSG_eyp2qndNdqYsmhJe64CzEOSnJPOUba6sGeJXsZEwW805z2F-j/exec';
 
-  // ⚠️ Número de WhatsApp (formato internacional sin +, espacios ni guiones)
+  // Número de WhatsApp (formato internacional sin +, espacios ni guiones)
   const WHATSAPP_NUMBER = '5491154252016';
 
   // TTL del caché del navegador (5 minutos)
@@ -382,9 +381,8 @@
   const btnLimpiarEl = document.getElementById('btn-limpiar');
 
   let TODOS_LOS_CURSOS = [];
-  const CACHE_DETALLES = {}; // { ID_Curso: Descripcion_Larga }
+  const CACHE_DETALLES = {};
 
-  // ---------- CACHÉ EN LOCALSTORAGE ----------
   function leerCache() {
     try {
       const raw = localStorage.getItem(CACHE_KEY);
@@ -404,10 +402,9 @@
         timestamp: Date.now(),
         cursos: cursos
       }));
-    } catch (e) { /* almacenamiento lleno o bloqueado, ignoramos */ }
+    } catch (e) { /* ignorar */ }
   }
 
-  // ---------- SKELETON ----------
   function mostrarSkeletons(cantidad) {
     gridEl.innerHTML = '';
     for (let i = 0; i < cantidad; i++) {
@@ -425,7 +422,6 @@
     }
   }
 
-  // ---------- API ----------
   async function apiGET(query) {
     const url = API_URL + '?' + query;
     const res = await fetch(url, { method: 'GET' });
@@ -446,9 +442,7 @@
     return String(txt || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
-  // ---------- CARGA PRINCIPAL ----------
   async function cargarCatalogo() {
-    // 1. Intentar desde caché del navegador (instantáneo)
     const cacheado = leerCache();
     if (cacheado && cacheado.length > 0) {
       TODOS_LOS_CURSOS = cacheado;
@@ -459,7 +453,6 @@
       return;
     }
 
-    // 2. Si no hay caché, mostrar skeletons y pedir al servidor
     mostrarSkeletons(6);
 
     try {
@@ -593,7 +586,6 @@
       boton.classList.toggle('abierto', abierto);
       boton.textContent = abierto ? 'Ocultar' : 'Ver más';
 
-      // Si se abrió y todavía no cargamos la descripción larga, la pedimos
       if (abierto && !CACHE_DETALLES[idCurso]) {
         try {
           const data = await apiGET('action=detalle&id=' + encodeURIComponent(idCurso));
