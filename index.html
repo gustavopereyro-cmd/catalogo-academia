@@ -60,7 +60,6 @@
     border-radius:2px; cursor:pointer; text-decoration:none;
     transition:all .3s ease; white-space:nowrap;
   }
-  .btn-ingresar:hover{background:var(--ink); color:var(--white); letter-spacing:.28em;}
 
   /* ---------- CONTROLES ---------- */
   .controles{
@@ -107,7 +106,6 @@
     border-bottom:1px solid transparent;
     transition:border-color .2s;
   }
-  .btn-limpiar:hover{border-bottom-color:var(--rose-deep);}
   .btn-limpiar[hidden]{display:none;}
 
   #contador{
@@ -171,8 +169,6 @@
     transform:scaleX(0); transform-origin:left;
     transition:transform .5s ease;
   }
-  .curso:hover{transform:translateY(-4px); box-shadow:0 24px 48px -24px rgba(201,143,138,.28);}
-  .curso:hover::before{transform:scaleX(1);}
   .curso-img{
     width:100%; aspect-ratio:16/10; object-fit:cover;
     background:var(--paper); display:block;
@@ -217,7 +213,6 @@
     padding:13px 22px; border-radius:2px; cursor:pointer;
     transition:all .3s ease;
   }
-  .btn-detalle:hover{background:var(--ink); color:var(--white); letter-spacing:.28em;}
   .btn-detalle.abierto{background:var(--rose-deep); color:var(--white); border-color:var(--rose-deep);}
   .btn-detalle:disabled{opacity:.5; cursor:wait;}
 
@@ -248,7 +243,6 @@
     text-transform:uppercase; letter-spacing:.22em;
     transition:all .3s ease;
   }
-  .detalle .btn-wa:hover{background:#1EBE5A; border-color:#1EBE5A; letter-spacing:.26em;}
   .detalle .btn-wa svg{width:16px; height:16px; fill:currentColor;}
 
   /* ---------- CTA FINAL ---------- */
@@ -268,7 +262,6 @@
     cursor:pointer; text-decoration:none;
     transition:all .3s ease;
   }
-  .cta .btn-wa:hover{background:#1EBE5A; letter-spacing:.28em;}
   .cta .btn-wa svg{width:16px; height:16px; fill:currentColor;}
 
   footer{
@@ -307,6 +300,19 @@
     .controles{padding:16px;}
     .filtro{width:100%;}
     .filtro select{flex:1;}
+  }
+
+  /* Botones: sin doble toque en celulares */
+  button, a{touch-action:manipulation; -webkit-tap-highlight-color:transparent;}
+  /* Efectos al pasar el mouse: solo en computadoras con mouse */
+  @media (hover:hover) and (pointer:fine){
+    .btn-ingresar:hover{background:var(--ink); color:var(--white);}
+    .btn-limpiar:hover{border-bottom-color:var(--rose-deep);}
+    .curso:hover{transform:translateY(-4px); box-shadow:0 24px 48px -24px rgba(201,143,138,.28);}
+    .curso:hover::before{transform:scaleX(1);}
+    .btn-detalle:hover{background:var(--ink); color:var(--white);}
+    .detalle .btn-wa:hover{background:#1EBE5A; border-color:#1EBE5A;}
+    .cta .btn-wa:hover{background:#1EBE5A;}
   }
 </style>
 </head>
@@ -560,7 +566,6 @@
         <p class="desc">${esc(curso.Descripcion_Programa) || ''}</p>
         <div class="meta">
           ${curso.Duracion ? `<span>${esc(curso.Duracion)}</span>` : ''}
-          ${curso.Puntaje_Minimo_Aprobacion ? `<span>Aprobación ${esc(curso.Puntaje_Minimo_Aprobacion)}</span>` : ''}
         </div>
         ${precios}
         <button class="btn-detalle" type="button" data-id="${esc(curso.ID_Curso)}">Ver más</button>
