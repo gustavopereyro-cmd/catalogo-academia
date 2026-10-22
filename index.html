@@ -213,37 +213,101 @@
     padding:13px 22px; border-radius:2px; cursor:pointer;
     transition:all .3s ease;
   }
-  .btn-detalle.abierto{background:var(--rose-deep); color:var(--white); border-color:var(--rose-deep);}
   .btn-detalle:disabled{opacity:.5; cursor:wait;}
+  .curso-img.clickable, .curso h3.clickable{cursor:pointer;}
 
-  /* ---------- DETALLE ---------- */
-  .detalle{
-    display:none;
-    border-top:1px solid var(--line);
-    padding:28px 24px;
-    background:linear-gradient(180deg, var(--paper) 0%, var(--white) 100%);
+  /* ---------- PÁGINA DEL CURSO ---------- */
+  #vista-detalle{display:none; padding:28px 0 20px; animation:aparecer .35s ease;}
+  @keyframes aparecer{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+  .btn-volver{
+    background:none; border:none; cursor:pointer; padding:4px 0; margin-bottom:18px;
+    font-family:'Jost',sans-serif; font-size:11px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.2em; color:var(--rose-deep);
+    border-bottom:1px solid transparent;
   }
-  .detalle.abierto{display:block; animation:fade .5s ease;}
-  @keyframes fade{from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);}}
-  .detalle .desc-larga{
-    font-size:14.5px; color:var(--ink-soft); line-height:1.8;
-    white-space:pre-line; margin-bottom:22px;
-    padding-left:16px; border-left:2px solid var(--rose-soft);
+  .det-layout{
+    display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:22px 40px;
+    grid-template-areas:"head side" "body side"; align-items:start;
   }
-  .detalle .cargando-detalle{
-    font-size:13.5px; color:var(--ink-soft);
-    font-style:italic; margin-bottom:22px;
+  .det-head{grid-area:head; min-width:0;}
+  .det-body{grid-area:body; min-width:0;}
+  .det-side{grid-area:side; position:sticky; top:20px; align-self:start;}
+  .det-head .eyebrow{font-size:10.5px; text-transform:uppercase; letter-spacing:.3em; color:var(--rose-deep); font-weight:500;}
+  .det-head h1{font-size:clamp(30px,4vw,46px); line-height:1.08; color:var(--ink); margin:8px 0 12px; font-weight:600;}
+  .det-head .bajada{font-size:16px; color:var(--ink-soft); line-height:1.7; max-width:700px;}
+  .det-hero{margin-top:22px; width:100%; aspect-ratio:16/8; object-fit:cover; border-radius:2px; display:block; background:var(--paper);}
+
+  .det-bloque{background:var(--white); border:1px solid var(--line); border-radius:2px; padding:28px 28px 24px; margin-bottom:22px;}
+  .det-bloque h2{
+    font-size:26px; color:var(--ink); margin-bottom:16px; line-height:1.2;
+    display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap;
   }
-  .detalle .btn-wa{
-    display:inline-flex; align-items:center; justify-content:center; gap:10px;
-    width:100%; padding:14px 22px;
+  .det-bloque h2 small{font-family:'Jost',sans-serif; font-size:12px; color:var(--ink-soft); letter-spacing:.06em; font-weight:400;}
+  .det-texto{font-size:15px; color:var(--ink-soft); line-height:1.85; white-space:pre-line;}
+
+  .modulo{border:1px solid var(--line); border-radius:2px; margin-bottom:10px; background:var(--cream);}
+  .modulo summary{
+    list-style:none; cursor:pointer; padding:15px 18px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .modulo summary::-webkit-details-marker{display:none;}
+  .modulo .m-num{font-size:11px; font-weight:500; color:var(--rose-deep); letter-spacing:.12em; min-width:22px;}
+  .modulo .m-tit{flex:1; font-size:15px; font-weight:400; color:var(--ink);}
+  .modulo .m-cant{font-size:11px; color:var(--ink-soft); white-space:nowrap;}
+  .modulo .m-flecha{width:16px; height:16px; color:var(--ink-soft); transition:transform .25s ease; flex-shrink:0;}
+  .modulo[open] .m-flecha{transform:rotate(180deg);}
+  .modulo[open] summary{border-bottom:1px solid var(--line);}
+  .modulo ul{list-style:none; padding:8px 18px 12px 54px;}
+  .modulo li{display:flex; align-items:center; gap:12px; padding:8px 0; font-size:14px; color:var(--ink-soft);}
+  .modulo li svg{width:16px; height:16px; color:var(--rose-deep); flex-shrink:0;}
+  .modulo .vacio-mod{font-style:italic;}
+
+  .lista-req{list-style:none;}
+  .lista-req li{display:flex; gap:12px; align-items:flex-start; padding:6px 0; font-size:15px; color:var(--ink-soft);}
+  .lista-req li svg{width:18px; height:18px; color:var(--rose-deep); flex-shrink:0; margin-top:3px;}
+
+  .faq{border-bottom:1px solid var(--line);}
+  .faq:last-child{border-bottom:none;}
+  .faq summary{list-style:none; cursor:pointer; padding:16px 0; display:flex; justify-content:space-between; gap:14px; font-size:15.5px; color:var(--ink); font-weight:400;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary svg{width:16px; height:16px; color:var(--ink-soft); flex-shrink:0; margin-top:4px; transition:transform .25s ease;}
+  .faq[open] summary svg{transform:rotate(180deg);}
+  .faq .resp{padding:0 0 18px; font-size:14.5px; color:var(--ink-soft); line-height:1.8; white-space:pre-line;}
+
+  .tarjeta-compra{
+    background:var(--white); border:1px solid var(--line); border-top:3px solid var(--rose);
+    border-radius:2px; padding:26px 24px; box-shadow:0 24px 50px -30px rgba(201,143,138,.45);
+  }
+  .tc-precio{font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:600; color:var(--ink); line-height:1;}
+  .tc-precio small{font-family:'Jost',sans-serif; font-size:13px; font-weight:400; color:var(--ink-soft); letter-spacing:.1em; margin-left:6px;}
+  .tc-alt{margin-top:8px; font-size:14px; color:var(--ink-soft);}
+  .tc-alt strong{color:var(--ink); font-weight:500;}
+  .tc-consultar{font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--ink);}
+  .tc-info{list-style:none; margin:20px 0 22px; padding-top:18px; border-top:1px dashed var(--line);}
+  .tc-info li{display:flex; align-items:center; gap:12px; padding:7px 0; font-size:14px; color:var(--ink);}
+  .tc-info li svg{width:18px; height:18px; color:var(--rose-deep); flex-shrink:0;}
+  .tarjeta-compra .btn-wa{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; padding:15px 20px;
     background:var(--wa); color:#fff; border:1px solid var(--wa);
     border-radius:2px; text-decoration:none; cursor:pointer;
     font-family:'Jost',sans-serif; font-size:11.5px; font-weight:500;
-    text-transform:uppercase; letter-spacing:.22em;
-    transition:all .3s ease;
+    text-transform:uppercase; letter-spacing:.2em;
+    transition:background .25s ease;
   }
-  .detalle .btn-wa svg{width:16px; height:16px; fill:currentColor;}
+  .tarjeta-compra .btn-wa svg{width:16px; height:16px; fill:currentColor;}
+  .tc-alumno{display:block; text-align:center; margin-top:14px; font-size:12.5px; color:var(--ink-soft);}
+  .tc-alumno a{color:var(--rose-deep); text-decoration:none; border-bottom:1px solid transparent;}
+  .det-error{text-align:center; padding:80px 20px; color:var(--ink-soft); font-style:italic;}
+
+  .sk{background:linear-gradient(90deg, #F1ECE7 25%, #E8E0D8 50%, #F1ECE7 75%); background-size:200% 100%; animation:shimmer 1.5s infinite linear; border-radius:2px;}
+
+  @media (max-width:900px){
+    .det-layout{grid-template-columns:1fr; grid-template-areas:"head" "side" "body";}
+    .det-side{position:static;}
+    .det-bloque{padding:22px 18px 18px;}
+    .modulo ul{padding-left:18px;}
+  }
 
   /* ---------- CTA FINAL ---------- */
   .cta{
@@ -311,7 +375,10 @@
     .curso:hover{transform:translateY(-4px); box-shadow:0 24px 48px -24px rgba(201,143,138,.28);}
     .curso:hover::before{transform:scaleX(1);}
     .btn-detalle:hover{background:var(--ink); color:var(--white);}
-    .detalle .btn-wa:hover{background:#1EBE5A; border-color:#1EBE5A;}
+    .tarjeta-compra .btn-wa:hover{background:#1EBE5A; border-color:#1EBE5A;}
+    .btn-volver:hover{border-bottom-color:var(--rose-deep);}
+    .tc-alumno a:hover{border-bottom-color:var(--rose-deep);}
+    .modulo summary:hover, .faq summary:hover .q{color:var(--rose-deep);}
     .cta .btn-wa:hover{background:#1EBE5A;}
   }
 </style>
@@ -327,7 +394,7 @@
       <div class="marca">Academia Profesional <strong>Mariana Barrera</strong></div>
     </div>
     <div class="header-right">
-      <a class="btn-ingresar" href="https://gustavopereyro-cmd.github.io/academia-alumno/" target="_blank" rel="noopener">Ingresar al aula</a>
+      <a class="btn-ingresar" href="https://gustavopereyro-cmd.github.io/academia-alumno/">Ingresar al aula</a>
     </div>
   </div>
 </header>
@@ -345,10 +412,13 @@
       <button class="btn-limpiar" id="btn-limpiar" type="button" hidden>Limpiar filtros</button>
     </div>
 
-    <div id="contador"></div>
-    <div id="grid" class="grid"></div>
-    <div id="vacio" style="display:none;">Todavía no hay cursos publicados. Volvé pronto.</div>
-    <div id="error" style="display:none;"></div>
+    <div id="vista-listado">
+      <div id="contador"></div>
+      <div id="grid" class="grid"></div>
+      <div id="vacio" style="display:none;">Todavía no hay cursos publicados. Volvé pronto.</div>
+      <div id="error" style="display:none;"></div>
+    </div>
+    <div id="vista-detalle"></div>
   </div>
 </main>
 
@@ -388,6 +458,7 @@
 
   let TODOS_LOS_CURSOS = [];
   const CACHE_DETALLES = {};
+  let eventosActivos = false;
 
   function leerCache() {
     try {
@@ -492,6 +563,9 @@
   }
 
   function activarEventos() {
+    aplicarRuta();
+    if (eventosActivos) return;
+    eventosActivos = true;
     busquedaEl.addEventListener('input', renderizar);
     filtroDuracionEl.addEventListener('change', renderizar);
     btnLimpiarEl.addEventListener('click', () => {
@@ -541,77 +615,224 @@
     filtrados.forEach(curso => gridEl.appendChild(crearTarjeta(curso)));
   }
 
+  /* ---------- Helpers ---------- */
+
+  function urlSegura(v) {
+    const s = String(v || '').trim();
+    return /^https:\/\//i.test(s) ? s : '';
+  }
+
+  // $150000 → $150.000
+  function precio(v) {
+    if (v === '' || v === null || v === undefined) return '';
+    const n = Number(String(v).replace(/[^\d.,-]/g, '').replace(/\./g, '').replace(',', '.'));
+    return isNaN(n) ? String(v) : n.toLocaleString('es-AR', { maximumFractionDigits: 2 });
+  }
+
+  function linkWhatsApp(nombreCurso) {
+    const msg = nombreCurso
+      ? `Hola! Quiero consultar por el curso "${nombreCurso}" de la Academia Mariana Barrera.`
+      : 'Hola! Quiero consultar por los cursos de la Academia Mariana Barrera.';
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  }
+
+  const ICONOS = {
+    wa: '<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>',
+    video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>',
+    doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
+    flecha: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>',
+    nivel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 20v-5M12 20V9M18 20V4"/></svg>',
+    reloj: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    clases: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5 3.5-5 3.5z"/></svg>',
+    material: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h6"/></svg>'
+  };
+
+  /* ---------- Tarjetas del catálogo ---------- */
+
   function crearTarjeta(curso) {
     const card = document.createElement('div');
     card.className = 'curso';
+    const img = urlSegura(curso.Imagen_URL);
 
     const precios = (curso.Precio_ARS || curso.Precio_USD) ? `
       <div class="precios">
-        ${curso.Precio_ARS ? `<div class="precio"><small>ARS</small>$${esc(curso.Precio_ARS)}</div>` : ''}
-        ${curso.Precio_USD ? `<div class="precio"><small>USD</small>US$${esc(curso.Precio_USD)}</div>` : ''}
+        ${curso.Precio_ARS ? `<div class="precio"><small>ARS</small>$${esc(precio(curso.Precio_ARS))}</div>` : ''}
+        ${curso.Precio_USD ? `<div class="precio"><small>USD</small>US$${esc(precio(curso.Precio_USD))}</div>` : ''}
       </div>` : '';
 
-    const mensajeWA = encodeURIComponent(
-      `Hola! Quiero consultar por el curso "${curso.Nombre}" de la Academia Mariana Barrera.`
-    );
-    const linkWA = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensajeWA}`;
-
     card.innerHTML = `
-      ${curso.Imagen_URL
-        ? `<img class="curso-img" src="${esc(curso.Imagen_URL)}" alt="${esc(curso.Nombre)}" loading="lazy">`
-        : `<div class="curso-img"></div>`}
+      ${img
+        ? `<img class="curso-img clickable" src="${esc(img)}" alt="${esc(curso.Nombre)}" loading="lazy">`
+        : `<div class="curso-img clickable"></div>`}
       <div class="curso-body">
         <div class="eyebrow">Curso</div>
-        <h3>${esc(curso.Nombre) || 'Curso sin nombre'}</h3>
-        <p class="desc">${esc(curso.Descripcion_Programa) || ''}</p>
+        <h3 class="clickable">${esc(curso.Nombre) || 'Curso sin nombre'}</h3>
+        <p class="desc">${esc(curso.Descripcion_Programa)}</p>
         <div class="meta">
           ${curso.Duracion ? `<span>${esc(curso.Duracion)}</span>` : ''}
+          ${curso.Nivel ? `<span>${esc(curso.Nivel)}</span>` : ''}
         </div>
         ${precios}
-        <button class="btn-detalle" type="button" data-id="${esc(curso.ID_Curso)}">Ver más</button>
-      </div>
-      <div class="detalle">
-        <div class="detalle-contenido">
-          <p class="cargando-detalle">Cargando descripción…</p>
-        </div>
-        <a class="btn-wa" href="${linkWA}" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Consultar por este curso
-        </a>
-      </div>
-    `;
-
-    const boton = card.querySelector('.btn-detalle');
-    const detalle = card.querySelector('.detalle');
-    const detalleContenido = card.querySelector('.detalle-contenido');
-    const idCurso = curso.ID_Curso;
-
-    boton.addEventListener('click', async () => {
-      const abierto = detalle.classList.toggle('abierto');
-      boton.classList.toggle('abierto', abierto);
-      boton.textContent = abierto ? 'Ocultar' : 'Ver más';
-
-      if (abierto && !CACHE_DETALLES[idCurso]) {
-        try {
-          const data = await apiGET('action=detalle&id=' + encodeURIComponent(idCurso));
-          const texto = (data && data.Descripcion_Larga) ? data.Descripcion_Larga : '';
-          CACHE_DETALLES[idCurso] = texto;
-          detalleContenido.innerHTML = texto
-            ? `<div class="desc-larga">${esc(texto)}</div>`
-            : '<p style="color:var(--ink-soft);font-style:italic;margin-bottom:22px;">Sin descripción ampliada.</p>';
-        } catch (e) {
-          detalleContenido.innerHTML = '<p style="color:var(--error);font-style:italic;margin-bottom:22px;">No se pudo cargar la descripción.</p>';
-        }
-      } else if (abierto && CACHE_DETALLES[idCurso]) {
-        const texto = CACHE_DETALLES[idCurso];
-        detalleContenido.innerHTML = texto
-          ? `<div class="desc-larga">${esc(texto)}</div>`
-          : '<p style="color:var(--ink-soft);font-style:italic;margin-bottom:22px;">Sin descripción ampliada.</p>';
-      }
-    });
-
+        <button class="btn-detalle" type="button">Ver curso</button>
+      </div>`;
+    const abrir = () => abrirCurso(curso.ID_Curso);
+    card.querySelectorAll('.clickable, .btn-detalle').forEach(el => el.addEventListener('click', abrir));
     return card;
   }
+
+  /* ---------- Navegación entre catálogo y página del curso ---------- */
+
+  const vistaListadoEl = document.getElementById('vista-listado');
+  const vistaDetalleEl = document.getElementById('vista-detalle');
+  const TITULO_PAGINA = document.title;
+  let entroDesdeListado = false;
+  let posicionListado = 0;
+
+  function abrirCurso(idCurso) {
+    entroDesdeListado = true;
+    posicionListado = window.scrollY;
+    location.hash = 'curso=' + encodeURIComponent(idCurso);
+  }
+
+  function volverAlCatalogo() {
+    if (entroDesdeListado) history.back();
+    else location.hash = '';
+  }
+
+  function aplicarRuta() {
+    const m = location.hash.match(/curso=([^&]+)/);
+    if (m) mostrarDetalle(decodeURIComponent(m[1]));
+    else mostrarListado();
+  }
+  window.addEventListener('hashchange', aplicarRuta);
+
+  function mostrarListado() {
+    document.title = TITULO_PAGINA;
+    vistaDetalleEl.style.display = 'none';
+    vistaDetalleEl.innerHTML = '';
+    vistaListadoEl.style.display = 'block';
+    if (TODOS_LOS_CURSOS.length) controlesEl.style.display = 'flex';
+    window.scrollTo(0, posicionListado);
+  }
+
+  /* ---------- Página del curso ---------- */
+
+  async function mostrarDetalle(idCurso) {
+    vistaListadoEl.style.display = 'none';
+    controlesEl.style.display = 'none';
+    vistaDetalleEl.style.display = 'block';
+    window.scrollTo(0, 0);
+
+    // Se muestra enseguida lo que ya se sabe del curso; el resto llega del servidor
+    const basico = TODOS_LOS_CURSOS.find(c => String(c.ID_Curso) === String(idCurso)) || null;
+    if (CACHE_DETALLES[idCurso]) { renderDetalle(CACHE_DETALLES[idCurso], false); return; }
+    renderDetalle(basico || { Nombre: '' }, true);
+
+    try {
+      const data = await apiGET('action=detalle&id=' + encodeURIComponent(idCurso));
+      if (!data || data.error) throw new Error('no disponible');
+      CACHE_DETALLES[idCurso] = data;
+      // si el usuario ya volvió al catálogo, no dibujar
+      if (location.hash.indexOf('curso=' + encodeURIComponent(idCurso)) === -1) return;
+      renderDetalle(data, false);
+    } catch (e) {
+      vistaDetalleEl.innerHTML = `
+        <button class="btn-volver" data-accion="volver">← Catálogo</button>
+        <div class="det-error">Este curso no está disponible en este momento.<br>
+          <a href="${linkWhatsApp('')}" target="_blank" rel="noopener" style="color:var(--rose-deep)">Consultanos por WhatsApp</a>
+        </div>`;
+    }
+  }
+
+  function renderDetalle(c, cargando) {
+    if (c.Nombre) document.title = c.Nombre + ' · Academia Profesional Mariana Barrera';
+    const img = urlSegura(c.Imagen_URL);
+    const temario = c.Temario || [];
+    let nVideos = 0, nMateriales = 0;
+    temario.forEach(t => (t.Items || []).forEach(x => { if (x.Tipo === 'Video') nVideos++; else nMateriales++; }));
+    const requisitos = String(c.Requisitos || '').split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    const preguntas = c.Preguntas || [];
+    const lineaSk = (w, hgt) => `<div class="sk" style="height:${hgt || 14}px; width:${w}; margin-bottom:12px;"></div>`;
+
+    // Tarjeta de precio
+    const ars = precio(c.Precio_ARS), usd = precio(c.Precio_USD);
+    const bloquePrecio = ars
+      ? `<div class="tc-precio">$${esc(ars)}<small>ARS</small></div>${usd ? `<div class="tc-alt">o <strong>US$${esc(usd)}</strong> USD</div>` : ''}`
+      : usd ? `<div class="tc-precio">US$${esc(usd)}<small>USD</small></div>`
+      : `<div class="tc-consultar">Consultá el precio</div>`;
+    const info = [];
+    if (c.Nivel) info.push(`<li>${ICONOS.nivel}Nivel ${esc(String(c.Nivel).toLowerCase())}</li>`);
+    if (c.Duracion) info.push(`<li>${ICONOS.reloj}${esc(c.Duracion)}</li>`);
+    if (temario.length) info.push(`<li>${ICONOS.clases}${temario.length} ${temario.length === 1 ? 'clase' : 'clases'}${nVideos ? ` · ${nVideos} ${nVideos === 1 ? 'video' : 'videos'}` : ''}</li>`);
+    if (nMateriales) info.push(`<li>${ICONOS.material}${nMateriales} ${nMateriales === 1 ? 'material descargable' : 'materiales descargables'}</li>`);
+
+    const cuerpoCargando = `<div class="det-bloque">${lineaSk('40%', 24)}${lineaSk('100%')}${lineaSk('92%')}${lineaSk('70%')}</div>
+      <div class="det-bloque">${lineaSk('30%', 24)}${lineaSk('100%', 48)}${lineaSk('100%', 48)}${lineaSk('100%', 48)}</div>`;
+
+    const cuerpo = `
+      ${c.Descripcion_Larga ? `
+        <div class="det-bloque">
+          <h2>Acerca de este curso</h2>
+          <div class="det-texto">${esc(c.Descripcion_Larga)}</div>
+        </div>` : ''}
+      ${temario.length ? `
+        <div class="det-bloque">
+          <h2>Contenidos <small>${temario.length} ${temario.length === 1 ? 'clase' : 'clases'}</small></h2>
+          ${temario.map((t, i) => {
+            const items = t.Items || [];
+            return `<details class="modulo"${i === 0 ? ' open' : ''}>
+              <summary>
+                <span class="m-num">${String(i + 1).padStart(2, '0')}</span>
+                <span class="m-tit">${esc(t.Titulo)}</span>
+                <span class="m-cant">${items.length ? items.length + (items.length === 1 ? ' contenido' : ' contenidos') : ''}</span>
+                <span class="m-flecha">${ICONOS.flecha}</span>
+              </summary>
+              <ul>${items.length
+                ? items.map(x => `<li>${x.Tipo === 'Video' ? ICONOS.video : ICONOS.doc}${esc(x.Nombre || (x.Tipo === 'Video' ? 'Video' : 'Material'))}</li>`).join('')
+                : '<li class="vacio-mod">Contenido en preparación</li>'}</ul>
+            </details>`;
+          }).join('')}
+        </div>` : ''}
+      ${requisitos.length ? `
+        <div class="det-bloque">
+          <h2>Requisitos</h2>
+          <ul class="lista-req">${requisitos.map(r => `<li>${ICONOS.check}${esc(r)}</li>`).join('')}</ul>
+        </div>` : ''}
+      ${preguntas.length ? `
+        <div class="det-bloque">
+          <h2>Preguntas frecuentes</h2>
+          ${preguntas.map(q => `<details class="faq">
+            <summary><span class="q">${esc(q.Pregunta)}</span>${ICONOS.flecha}</summary>
+            <div class="resp">${esc(q.Respuesta)}</div>
+          </details>`).join('')}
+        </div>` : ''}`;
+
+    vistaDetalleEl.innerHTML = `
+      <button class="btn-volver" data-accion="volver">← Catálogo</button>
+      <div class="det-layout">
+        <div class="det-head">
+          <div class="eyebrow">Curso</div>
+          <h1>${esc(c.Nombre) || (cargando ? '' : 'Curso')}</h1>
+          ${c.Descripcion_Programa ? `<p class="bajada">${esc(c.Descripcion_Programa)}</p>` : ''}
+          ${img ? `<img class="det-hero" src="${esc(img)}" alt="${esc(c.Nombre)}">` : ''}
+        </div>
+        <aside class="det-side">
+          <div class="tarjeta-compra">
+            ${bloquePrecio}
+            ${info.length ? `<ul class="tc-info">${info.join('')}</ul>` : '<div style="height:20px"></div>'}
+            <a class="btn-wa" href="${linkWhatsApp(c.Nombre)}" target="_blank" rel="noopener">${ICONOS.wa} Consultar por WhatsApp</a>
+            <span class="tc-alumno">¿Ya sos alumna? <a href="https://gustavopereyro-cmd.github.io/academia-alumno/">Ingresá al aula</a></span>
+          </div>
+        </aside>
+        <div class="det-body">${cargando ? cuerpoCargando : cuerpo}</div>
+      </div>`;
+  }
+
+  vistaDetalleEl.addEventListener('click', e => {
+    const el = e.target.closest('[data-accion="volver"]');
+    if (el) volverAlCatalogo();
+  });
 
   cargarCatalogo();
 </script>
