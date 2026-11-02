@@ -104,6 +104,58 @@
   .hero .entra:nth-child(2){animation-delay:60ms;}
   .hero .entra:nth-child(3){animation-delay:120ms;}
 
+  /* ---------- NOVEDADES (fila deslizable) ---------- */
+  .novedades{margin:4px 0 36px; transition:opacity var(--t-med) var(--ease-out);}
+  .novedades[hidden]{display:none;}
+  .nov-cab{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; margin-bottom:18px;}
+  .nov-cab .eyebrow{font-size:11px; font-weight:500; letter-spacing:.3em; text-transform:uppercase; color:var(--rose-ink);}
+  .nov-cab h2{font-size:clamp(30px,3.4vw,40px); line-height:1; margin-top:8px;}
+  .nov-flechas{display:flex; gap:10px;}
+  .nov-flecha{
+    width:48px; height:48px; border-radius:50%; border:1px solid #E6D8D1; background:var(--white); color:var(--ink);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:background-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out), transform var(--t-fast) var(--ease-out), opacity var(--t-med) var(--ease-out);
+  }
+  .nov-flecha svg{width:18px; height:18px;}
+  .nov-flecha:active{transform:scale(.94);}
+  .nov-flecha:disabled{opacity:.35; cursor:default;}
+  .nov-flecha[hidden]{display:none;}
+  .nov-carril{
+    display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+    padding:6px 2px 26px; margin:0 -2px; scrollbar-width:none; overscroll-behavior-x:contain;
+  }
+  .nov-carril::-webkit-scrollbar{display:none;}
+  .nov{
+    flex:none; width:300px; scroll-snap-align:start; display:flex; flex-direction:column;
+    background:var(--white); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+    text-decoration:none; color:inherit; box-shadow:var(--shadow-card);
+    transition:transform var(--t-med) var(--ease-out), box-shadow var(--t-med) var(--ease-out);
+  }
+  .nov:active{transform:scale(.98); transition-duration:var(--t-fast);}
+  .nov.entra{opacity:0; transform:translateX(16px); animation:deslizar var(--t-slow) var(--ease-out) forwards; animation-delay:calc(var(--i, 0) * 60ms);}
+  .nov-media{position:relative; height:170px; overflow:hidden; background:var(--paper);}
+  .nov-media img{width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity var(--t-slow) var(--ease-out), transform 700ms var(--ease-out);}
+  .nov-media img.ok{opacity:1;}
+  .nov-etq{
+    position:absolute; left:14px; top:14px; padding:6px 12px; border-radius:999px;
+    font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .etq-nuevo{background:var(--ink); color:#fff; overflow:hidden;}
+  .etq-nuevo::after{content:''; position:absolute; inset:0; background:linear-gradient(110deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform:translateX(-120%); animation:brillo 3.4s var(--ease-out) infinite;}
+  .etq-abiertas{background:var(--white); color:#14703A;}
+  .etq-abiertas::before{content:''; display:inline-block; width:7px; height:7px; border-radius:50%; background:#178741; margin-right:7px; vertical-align:1px; animation:latido 1.8s var(--ease-out) infinite;}
+  .etq-ultimos{background:var(--rose-ink); color:#fff;}
+  .etq-pronto{background:rgba(255,255,255,.92); color:var(--ink);}
+  .nov-body{padding:16px 18px 18px; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .nov-body h3{font-size:22px; font-weight:600; line-height:1.14;}
+  .nov-dato{display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-soft); margin-top:auto;}
+  .nov-dato svg{width:15px; height:15px; color:var(--rose-deep); flex:none;}
+  .listado-titulo{text-align:center; font-size:clamp(28px,3vw,34px); margin:0 0 18px; padding-top:28px; border-top:1px solid var(--line);}
+  .listado-titulo.sin-borde{border-top:none; padding-top:0;}
+  @keyframes deslizar{from{opacity:0; transform:translateX(16px);} to{opacity:1; transform:none;}}
+  @keyframes brillo{0%,55%{transform:translateX(-120%);} 100%{transform:translateX(120%);}}
+  @keyframes latido{0%{box-shadow:0 0 0 0 rgba(23,135,65,.5);} 70%{box-shadow:0 0 0 7px rgba(23,135,65,0);} 100%{box-shadow:0 0 0 0 rgba(23,135,65,0);}}
+
   /* ---------- CONTROLES ---------- */
   .controles{
     display:flex; flex-direction:column; gap:16px; align-items:center;
@@ -351,6 +403,9 @@
     .chip:not([aria-pressed="true"]):hover{border-color:var(--rose); background:var(--rose-tint);}
     .btn-limpiar:hover{text-decoration-color:currentColor;}
     .curso:hover{transform:translateY(-3px); box-shadow:var(--shadow-hover); border-color:#E6D8D1;}
+    .nov:hover{transform:translateY(-4px); box-shadow:var(--shadow-hover);}
+    .nov:hover .nov-media img.ok{transform:scale(1.05);}
+    .nov-flecha:not(:disabled):hover{background:var(--ink); color:#fff; border-color:var(--ink);}
     .curso:hover .curso-media img.ok{transform:scale(1.04);}
     .curso:hover .ver-curso svg{transform:translateX(3px);}
     .btn-volver:hover{border-color:var(--rose);}
@@ -382,6 +437,7 @@
 
   /* Quien pidió menos movimiento: sin desplazamientos, solo fundidos cortos */
   @media (prefers-reduced-motion:reduce){
+    .nov-carril{scroll-behavior:auto;}
     *, *::before, *::after{animation-duration:1ms !important; animation-delay:0ms !important; transition-duration:1ms !important;}
     .curso:hover, .curso:active{transform:none;}
     .curso:hover .curso-media img.ok{transform:none;}
@@ -414,6 +470,22 @@
         <h1 class="entra">Cursos de estética <em>&amp; cosmiatría</em></h1>
         <p class="entra">Programas dictados por el Instituto Mariana Barrera. Elegí tu curso, mirá su contenido y consultanos por WhatsApp.</p>
       </section>
+
+      <section class="novedades" id="novedades" aria-labelledby="nov-titulo" hidden>
+        <div class="nov-cab">
+          <div>
+            <div class="eyebrow">Lo último de la academia</div>
+            <h2 id="nov-titulo">Novedades</h2>
+          </div>
+          <div class="nov-flechas">
+            <button class="nov-flecha" id="nov-ant" type="button" aria-label="Ver novedades anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="nov-flecha" id="nov-sig" type="button" aria-label="Ver más novedades"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+        <div class="nov-carril" id="nov-carril" tabindex="0" aria-label="Novedades: deslizá para ver más"></div>
+      </section>
+
+      <h2 class="listado-titulo sin-borde" id="listado-titulo">Todos los cursos</h2>
 
       <div class="controles" id="controles" style="display:none;">
         <div class="buscador">
@@ -612,7 +684,93 @@
     }
   }
 
+  /* ---------- Novedades ---------- */
+
+  const novedadesEl = document.getElementById('novedades');
+  const carrilEl = document.getElementById('nov-carril');
+  const novAntEl = document.getElementById('nov-ant');
+  const novSigEl = document.getElementById('nov-sig');
+  const listadoTituloEl = document.getElementById('listado-titulo');
+  let hayNovedades = false;
+
+  const CLASE_ETIQUETA = { 'Nuevo': 'etq-nuevo', 'Inscripciones abiertas': 'etq-abiertas', 'Últimos lugares': 'etq-ultimos', 'Próximamente': 'etq-pronto' };
+  const ICONO_CALENDARIO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>';
+
+  // "2026-03-16" → "Comienza el 16 de marzo" (o "Comenzó…" si ya pasó)
+  function textoFecha(iso) {
+    const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return '';
+    const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+    const opciones = { day: 'numeric', month: 'long' };
+    if (d.getFullYear() !== hoy.getFullYear()) opciones.year = 'numeric';
+    const fecha = d.toLocaleDateString('es-AR', opciones);
+    return (d < hoy ? 'Comenzó el ' : 'Comienza el ') + fecha;
+  }
+
+  function armarNovedades() {
+    const lista = TODOS_LOS_CURSOS.filter(c => c.Destacado);
+    hayNovedades = lista.length > 0;
+    if (!hayNovedades) { novedadesEl.hidden = true; listadoTituloEl.classList.add('sin-borde'); return; }
+    // Primero los que empiezan antes; sin fecha, al final
+    lista.sort((a, b) => (a.Fecha_Inicio_Curso || '9999').localeCompare(b.Fecha_Inicio_Curso || '9999'));
+    carrilEl.innerHTML = '';
+    lista.forEach((c, i) => {
+      const a = document.createElement('a');
+      a.className = 'nov entra';
+      a.style.setProperty('--i', Math.min(i, 6));
+      a.href = '#curso=' + encodeURIComponent(c.ID_Curso);
+      a.dataset.id = c.ID_Curso;
+      const img = urlSegura(c.Imagen_URL);
+      const etq = CLASE_ETIQUETA[c.Etiqueta] ? `<span class="nov-etq ${CLASE_ETIQUETA[c.Etiqueta]}">${esc(c.Etiqueta)}</span>` : '';
+      const dato = textoFecha(c.Fecha_Inicio_Curso) || (c.Duracion ? 'Duración: ' + c.Duracion : '');
+      a.innerHTML = `
+        <div class="nov-media">
+          ${img ? `<img data-fade src="${esc(imagenTarjeta(img))}" alt="" loading="lazy" decoding="async" width="600" height="340">` : ''}
+          ${etq}
+        </div>
+        <div class="nov-body">
+          <h3>${esc(c.Nombre)}</h3>
+          ${dato ? `<div class="nov-dato">${ICONO_CALENDARIO}${esc(dato)}</div>` : ''}
+        </div>`;
+      a.addEventListener('click', () => {
+        entroDesdeListado = true;
+        posicionListado = window.scrollY;
+        ultimoCurso = String(c.ID_Curso);
+        ultimoElemento = a;
+      });
+      carrilEl.appendChild(a);
+    });
+    activarFundido(carrilEl);
+    novedadesEl.hidden = false;
+    listadoTituloEl.classList.remove('sin-borde');
+    requestAnimationFrame(actualizarFlechas);
+  }
+
+  // Flechas: se apagan en los extremos y se ocultan si todo entra en pantalla
+  function actualizarFlechas() {
+    const max = carrilEl.scrollWidth - carrilEl.clientWidth;
+    const hayMas = max > 4;
+    novAntEl.hidden = novSigEl.hidden = !hayMas;
+    novAntEl.disabled = carrilEl.scrollLeft <= 4;
+    novSigEl.disabled = carrilEl.scrollLeft >= max - 4;
+  }
+  function pasoCarril() {
+    const tarjeta = carrilEl.querySelector('.nov');
+    return tarjeta ? tarjeta.offsetWidth + 20 : 320;
+  }
+  novAntEl.addEventListener('click', () => carrilEl.scrollBy({ left: -pasoCarril() }));
+  novSigEl.addEventListener('click', () => carrilEl.scrollBy({ left: pasoCarril() }));
+  let carrilTick = false;
+  carrilEl.addEventListener('scroll', () => {
+    if (carrilTick) return;
+    carrilTick = true;
+    requestAnimationFrame(() => { actualizarFlechas(); carrilTick = false; });
+  }, { passive: true });
+  window.addEventListener('resize', () => { if (hayNovedades) actualizarFlechas(); });
+
   function prepararListado() {
+    armarNovedades();
     armarChips();
     controlesEl.style.display = 'flex';
     renderizar();
@@ -663,6 +821,13 @@
     });
 
     btnLimpiarEl.hidden = !(q || duracionSel);
+    // Mientras se busca o filtra, las novedades se ocultan para que los resultados suban
+    if (hayNovedades) {
+      const buscando = !!(q || duracionSel);
+      novedadesEl.hidden = buscando;
+      listadoTituloEl.classList.toggle('sin-borde', buscando);
+      if (!buscando) actualizarFlechas();
+    }
     const total = TODOS_LOS_CURSOS.length;
     contadorEl.textContent = filtrados.length === total
       ? `${total} ${total === 1 ? 'curso disponible' : 'cursos disponibles'}`
@@ -715,6 +880,7 @@
       entroDesdeListado = true;
       posicionListado = window.scrollY;
       ultimoCurso = String(curso.ID_Curso);
+      ultimoElemento = null;
     });
     return card;
   }
@@ -727,6 +893,7 @@
   let entroDesdeListado = false;
   let posicionListado = 0;
   let ultimoCurso = null;
+  let ultimoElemento = null;   // tarjeta de Novedades desde la que se entró
 
   function volverAlCatalogo() {
     if (entroDesdeListado) history.back();
@@ -749,7 +916,8 @@
     ocultarBarraMovil();
     window.scrollTo(0, posicionListado);
     // Al volver, el foco regresa a la tarjeta del curso que se había abierto
-    const previa = ultimoCurso && [...gridEl.querySelectorAll('.curso')].find(c => c.dataset.id === ultimoCurso);
+    const previa = (ultimoElemento && ultimoElemento.isConnected) ? ultimoElemento
+      : ultimoCurso && [...gridEl.querySelectorAll('.curso')].find(c => c.dataset.id === ultimoCurso);
     if (previa) previa.focus({ preventScroll: true });
   }
 
